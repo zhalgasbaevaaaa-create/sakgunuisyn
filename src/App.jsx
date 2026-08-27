@@ -11,7 +11,7 @@ import QuizSection from './components/QuizSection';
 import ResultsSection from './components/ResultsSection';
 import SearchModal from './components/SearchModal';
 import { QUIZ_QUESTIONS } from './data/historyData';
-import { X, Sparkles, Compass } from 'lucide-react';
+import { X, Sparkles, Compass, UserCheck } from 'lucide-react';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('hero');
@@ -20,9 +20,8 @@ export default function App() {
   const [score, setScore] = useState(0);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedStateForView, setSelectedStateForView] = useState(null);
-  const [fullscreenSection, setFullscreenSection] = useState(null); // 'map', 'states', 'figures', 'timeline', 'continuity', 'legends', 'quiz', 'results'
+  const [fullscreenSection, setFullscreenSection] = useState(null);
 
-  // ESC key handler for full screen exit
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && fullscreenSection) {
@@ -33,7 +32,6 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [fullscreenSection]);
 
-  // Track scroll progress for reading bar
   useEffect(() => {
     const handleScroll = () => {
       if (fullscreenSection) return;
@@ -156,7 +154,6 @@ export default function App() {
       {/* FULLSCREEN OVERLAY MODAL */}
       {fullscreenSection && (
         <div className="fixed inset-0 z-50 bg-obsidian-950/98 backdrop-blur-2xl overflow-y-auto p-4 sm:p-10 fullscreen-mode animate-fadeIn">
-          {/* Top Control Bar with Close Button (Крестик) */}
           <div className="sticky top-0 z-50 flex items-center justify-between bg-obsidian-900/90 backdrop-blur-md p-4 rounded-2xl border border-gold-500/30 mb-8 shadow-2xl">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-gold-500 flex items-center justify-center text-obsidian-950 font-bold">
@@ -167,12 +164,11 @@ export default function App() {
                   ТОЛЫҚ ЭКРАН РЕЖИМІ (Ерте темір дәуірі)
                 </h2>
                 <p className="text-xs text-slate-400 font-sans">
-                  Шығу үшін оң жақтағы крестикті немесе клавиатурадан ESC пернесін басыңыз
+                  Интерактивті сайт жетекшісі — Сарсенбаев А.Б.
                 </p>
               </div>
             </div>
 
-            {/* Prominent Top Close Button (Крестик) */}
             <button
               onClick={() => setFullscreenSection(null)}
               className="group p-3 rounded-2xl bg-gold-500/20 hover:bg-gold-500 border-2 border-gold-500 text-gold-300 hover:text-obsidian-950 transition-all duration-300 shadow-xl flex items-center gap-2"
@@ -183,7 +179,6 @@ export default function App() {
             </button>
           </div>
 
-          {/* Render Fullscreen Content */}
           <div className="max-w-7xl mx-auto pb-16">
             {fullscreenSection === 'map' && (
               <InteractiveMap
@@ -260,7 +255,11 @@ export default function App() {
 
       {/* Museum Footer */}
       <footer className="py-12 px-4 bg-obsidian-950 border-t border-gold-500/20 text-center text-xs text-slate-400 font-sans space-y-3">
-        <div className="font-lora text-gold-400 font-bold text-base">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-300 font-lora font-bold text-xs sm:text-sm">
+          <UserCheck className="w-4 h-4 text-gold-400" />
+          <span>Интерактивті сайт жетекшісі — Сарсенбаев А.Б.</span>
+        </div>
+        <div className="font-lora text-gold-400 font-bold text-base pt-1">
           ЕРТЕ ТЕМІР ДӘУІРІ: САЯСИ КАРТА
         </div>
         <p className="max-w-2xl mx-auto text-slate-400">

@@ -1,17 +1,31 @@
 import React from 'react';
 import { CONTINUITY_DATA } from '../data/historyData';
-import { ShieldAlert, ArrowRight, BookOpen, Scroll, CheckCircle2 } from 'lucide-react';
+import { ShieldAlert, ArrowRight, BookOpen, Scroll, CheckCircle2, Maximize2, Minimize2 } from 'lucide-react';
 
-export default function ContinuitySection() {
+export default function ContinuitySection({ onToggleFullscreen, isFullscreen }) {
   return (
-    <section id="continuity" className="py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10">
+    <section id="continuity" className={`py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10 ${isFullscreen ? 'fullscreen-mode' : ''}`}>
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            <ShieldAlert className="w-3.5 h-3.5" />
-            <span>Тарихи Сабақтастық & Дереккөздер</span>
+        <div className="text-center max-w-3xl mx-auto mb-12 relative">
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <div className="mx-auto inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider">
+              <ShieldAlert className="w-3.5 h-3.5" />
+              <span>Тарихи Сабақтастық & Дереккөздер</span>
+            </div>
+
+            {onToggleFullscreen && (
+              <button
+                onClick={onToggleFullscreen}
+                className="px-3 py-1.5 rounded-xl bg-obsidian-900 border border-gold-500/30 text-gold-400 hover:text-gold-300 text-xs font-semibold flex items-center gap-1.5 shadow-lg transition-all"
+                title="Толық экран режимі"
+              >
+                {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                <span className="hidden sm:inline">{isFullscreen ? 'Шығу' : 'Толық экран'}</span>
+              </button>
+            )}
           </div>
+
           <h2 className="font-lora text-3xl sm:text-4xl font-bold text-slate-100 mb-3">
             {CONTINUITY_DATA.title}
           </h2>
@@ -50,7 +64,6 @@ export default function ContinuitySection() {
             ))}
           </div>
 
-          {/* Synthesis Banner */}
           <div className="mt-8 p-6 bg-gradient-to-r from-obsidian-900 via-obsidian-950 to-obsidian-900 rounded-2xl border border-gold-500/30 text-center max-w-4xl mx-auto shadow-2xl">
             <h4 className="font-lora text-lg font-bold text-gold-400 mb-2">
               Ең маңызды ғылыми қорытынды (PDF):

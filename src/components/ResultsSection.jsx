@@ -1,14 +1,13 @@
 import React from 'react';
-import { Award, CheckCircle, XCircle, RotateCcw, Sparkles, BookOpen, ShieldCheck, Trophy } from 'lucide-react';
+import { Award, CheckCircle, XCircle, RotateCcw, Sparkles, BookOpen, ShieldCheck, Trophy, Maximize2, Minimize2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-export default function ResultsSection({ userAnswers, totalQuestions, onReset }) {
+export default function ResultsSection({ userAnswers, totalQuestions, onReset, onToggleFullscreen, isFullscreen }) {
   const answeredCount = Object.keys(userAnswers).length;
   const correctCount = Object.values(userAnswers).filter(a => a.isCorrect).length;
   const incorrectCount = answeredCount - correctCount;
   const percentage = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
 
-  // Gamification Levels based on percentage
   const getRank = () => {
     if (percentage >= 90) return { title: 'Дала Тарихшысы & Академик', badge: '🥇 Алтын Дәреже' };
     if (percentage >= 70) return { title: 'Тарихи Зерттеуші', badge: '🥈 Күміс Дәреже' };
@@ -23,14 +22,28 @@ export default function ResultsSection({ userAnswers, totalQuestions, onReset })
   };
 
   return (
-    <section id="results" className="py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10">
+    <section id="results" className={`py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10 ${isFullscreen ? 'fullscreen-mode' : ''}`}>
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Trophy className="w-3.5 h-3.5" />
-            <span>Сайт Соңындағы Нәтижелер Бүктемесі</span>
+        <div className="text-center max-w-2xl mx-auto mb-10 relative">
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <div className="mx-auto inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider">
+              <Trophy className="w-3.5 h-3.5" />
+              <span>Сайт Соңындағы Нәтижелер Бүктемесі</span>
+            </div>
+
+            {onToggleFullscreen && (
+              <button
+                onClick={onToggleFullscreen}
+                className="px-3 py-1.5 rounded-xl bg-obsidian-900 border border-gold-500/30 text-gold-400 hover:text-gold-300 text-xs font-semibold flex items-center gap-1.5 shadow-lg transition-all"
+                title="Толық экран режимі"
+              >
+                {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                <span className="hidden sm:inline">{isFullscreen ? 'Шығу' : 'Толық экран'}</span>
+              </button>
+            )}
           </div>
+
           <h2 className="font-lora text-3xl sm:text-4xl font-bold text-slate-100 mb-3">
             Тарихи Зерттеу Нәтижесі
           </h2>
@@ -41,7 +54,6 @@ export default function ResultsSection({ userAnswers, totalQuestions, onReset })
 
         {/* Result Dashboard Card */}
         <div className="bg-obsidian-900 border border-gold-500/30 rounded-3xl p-6 sm:p-10 backdrop-blur-md shadow-2xl relative overflow-hidden space-y-8">
-          {/* Top Rank Badge Header */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 border-b border-slate-800 pb-8 text-center sm:text-left">
             <div className="space-y-2">
               <span className="px-3.5 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs font-bold border border-gold-500/40">
@@ -55,14 +67,12 @@ export default function ResultsSection({ userAnswers, totalQuestions, onReset })
               </p>
             </div>
 
-            {/* Percentage Circle */}
             <div className="relative w-32 h-32 rounded-full bg-obsidian-950 border-4 border-gold-500/40 flex flex-col items-center justify-center shadow-inner flex-shrink-0">
               <span className="font-lora text-3xl font-extrabold text-gold-400">{percentage}%</span>
               <span className="text-[10px] text-slate-400 uppercase tracking-widest font-mono">Нәтиже</span>
             </div>
           </div>
 
-          {/* Detailed Statistics Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="p-4 bg-obsidian-950 rounded-2xl border border-slate-800 text-center space-y-1">
               <span className="text-slate-400 text-xs font-sans">Жалпы сұрақтар</span>
@@ -85,7 +95,6 @@ export default function ResultsSection({ userAnswers, totalQuestions, onReset })
             </div>
           </div>
 
-          {/* Gamification Achievements Unlocked */}
           <div className="p-5 bg-obsidian-950 rounded-2xl border border-gold-500/20 space-y-3">
             <h4 className="font-lora text-base font-bold text-gold-400 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-gold-400" />
@@ -107,7 +116,6 @@ export default function ResultsSection({ userAnswers, totalQuestions, onReset })
             </div>
           </div>
 
-          {/* Action Buttons */}
           <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-800">
             <button
               onClick={handleConfetti}

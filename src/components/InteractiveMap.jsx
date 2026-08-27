@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { STATES_DATA } from '../data/historyData';
-import { ZoomIn, ZoomOut, RotateCcw, Info, MapPin, Sparkles, Navigation, Layers, ExternalLink } from 'lucide-react';
+import { ZoomIn, ZoomOut, RotateCcw, Info, MapPin, Sparkles, Navigation, Layers, ExternalLink, Maximize2, Minimize2 } from 'lucide-react';
 
-export default function InteractiveMap({ onSelectState }) {
+export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFullscreen }) {
   const [selectedStateId, setSelectedStateId] = useState('saka');
   const [eraFilter, setEraFilter] = useState('all'); // 'all', 'early', 'late'
   const [zoomLevel, setZoomLevel] = useState(1);
@@ -21,13 +21,12 @@ export default function InteractiveMap({ onSelectState }) {
   };
 
   // Regions definition in SVG coordinates (width 1000, height 550)
-  // Maps Central Eurasia: W. Kazakhstan, Zhetysu, Syr Darya, Mongolia, Black Sea
   const mapRegions = [
     {
       id: 'scythians',
       name: 'Скифтер',
       period: 'б.з.б. VIII–III ғғ.',
-      color: '#3b82f6', // Blue
+      color: '#3b82f6',
       era: 'early',
       path: 'M 100,240 C 120,200 180,190 260,210 C 290,230 300,270 270,300 C 220,330 150,320 100,280 Z',
       center: { x: 190, y: 250 },
@@ -38,7 +37,7 @@ export default function InteractiveMap({ onSelectState }) {
       id: 'sarmatians',
       name: 'Сарматтар',
       period: 'б.з.б. III ғ. – б.з. IV ғ.',
-      color: '#e11d48', // Red
+      color: '#e11d48',
       era: 'late',
       path: 'M 250,220 C 300,180 420,180 480,220 C 500,280 460,340 370,360 C 300,360 250,300 250,220 Z',
       center: { x: 360, y: 260 },
@@ -49,7 +48,7 @@ export default function InteractiveMap({ onSelectState }) {
       id: 'saka',
       name: 'Сақтар',
       period: 'б.з.б. VIII–III ғғ.',
-      color: '#d4af37', // Gold
+      color: '#d4af37',
       era: 'early',
       path: 'M 460,240 C 530,200 680,210 740,260 C 730,340 620,390 480,360 C 440,320 440,270 460,240 Z',
       center: { x: 570, y: 290 },
@@ -60,7 +59,7 @@ export default function InteractiveMap({ onSelectState }) {
       id: 'huns',
       name: 'Ғұндар',
       period: 'б.з.б. III ғ. соңы – б.з. алғашқы ғғ.',
-      color: '#10b981', // Emerald Green
+      color: '#10b981',
       era: 'late',
       path: 'M 680,180 C 760,150 900,160 950,220 C 940,310 820,350 710,310 C 660,260 660,200 680,180 Z',
       center: { x: 800, y: 230 },
@@ -71,7 +70,7 @@ export default function InteractiveMap({ onSelectState }) {
       id: 'wusun',
       name: 'Үйсіндер',
       period: 'б.з.б. II ғ. – б.з. V ғ.',
-      color: '#8b5cf6', // Purple
+      color: '#8b5cf6',
       era: 'late',
       path: 'M 560,300 C 620,280 690,300 700,350 C 690,400 620,410 560,380 C 540,350 540,320 560,300 Z',
       center: { x: 620, y: 340 },
@@ -82,7 +81,7 @@ export default function InteractiveMap({ onSelectState }) {
       id: 'kangju',
       name: 'Қаңлылар',
       period: 'б.з.б. II ғ. – б.з. IV ғ.',
-      color: '#f59e0b', // Amber/Orange
+      color: '#f59e0b',
       era: 'late',
       path: 'M 440,310 C 500,290 560,320 550,380 C 520,430 450,420 420,380 C 410,340 420,320 440,310 Z',
       center: { x: 480, y: 350 },
@@ -96,14 +95,29 @@ export default function InteractiveMap({ onSelectState }) {
   const syrDaryaPath = "M 550,260 L 520,310 L 480,360 L 440,390";
 
   return (
-    <section id="map" className="py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10">
-      <div className="max-w-7xl mx-auto">
+    <section id="map" className={`py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10 ${isFullscreen ? 'fullscreen-mode' : ''}`}>
+      <div className="max-w-7xl mx-auto relative">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Navigation className="w-3.5 h-3.5" />
-            <span>Интерактивті Тарихи Атлас</span>
+        <div className="text-center max-w-3xl mx-auto mb-10 relative">
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <div className="mx-auto inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider">
+              <Navigation className="w-3.5 h-3.5" />
+              <span>Интерактивті Тарихи Атлас</span>
+            </div>
+
+            {/* Fullscreen Button */}
+            {onToggleFullscreen && (
+              <button
+                onClick={onToggleFullscreen}
+                className="px-3 py-1.5 rounded-xl bg-obsidian-900 border border-gold-500/30 text-gold-400 hover:text-gold-300 text-xs font-semibold flex items-center gap-1.5 shadow-lg transition-all"
+                title="Толық экран режимі"
+              >
+                {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                <span className="hidden sm:inline">{isFullscreen ? 'Шығу' : 'Толық экран'}</span>
+              </button>
+            )}
           </div>
+
           <h2 className="font-lora text-3xl sm:text-4xl font-bold text-slate-100 mb-3">
             Ерте темір дәуірінің саяси картасы
           </h2>
@@ -213,7 +227,6 @@ export default function InteractiveMap({ onSelectState }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Interactive SVG Canvas Container with Antique Background */}
           <div className="lg:col-span-8 bg-obsidian-900 border border-gold-500/20 rounded-2xl overflow-hidden relative shadow-2xl min-h-[460px]">
-            {/* Background Parchment Texture */}
             <div className="absolute inset-0 z-0 opacity-15 pointer-events-none">
               <img
                 src="./images/map_background.jpg"
@@ -250,7 +263,6 @@ export default function InteractiveMap({ onSelectState }) {
                   transform: `scale(${zoomLevel}) translate(${panOffset.x}px, ${panOffset.y}px)`
                 }}
               >
-                {/* Background Grid & Water Bodies */}
                 <defs>
                   <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
                     <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(212, 175, 55, 0.05)" strokeWidth="1"/>
@@ -367,7 +379,7 @@ export default function InteractiveMap({ onSelectState }) {
             </div>
           </div>
 
-          {/* Right Selected State Details Panel (100% PDF content) */}
+          {/* Right Selected State Details Panel */}
           <div className="lg:col-span-4 bg-obsidian-900 border border-gold-500/20 rounded-2xl p-6 backdrop-blur-md shadow-2xl relative">
             <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
               <div className="flex items-center gap-2">
@@ -399,7 +411,6 @@ export default function InteractiveMap({ onSelectState }) {
 
             {/* Content Tabbed Info */}
             <div className="space-y-4 max-h-[380px] overflow-y-auto pr-1 text-xs">
-              {/* Territory List */}
               <div className="p-3 bg-obsidian-950 rounded-xl border border-slate-800">
                 <h4 className="font-semibold text-gold-400 mb-1 flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5" />
@@ -412,7 +423,6 @@ export default function InteractiveMap({ onSelectState }) {
                 </ul>
               </div>
 
-              {/* Capital Details */}
               <div className="p-3 bg-obsidian-950 rounded-xl border border-slate-800">
                 <h4 className="font-semibold text-gold-400 mb-1 flex items-center gap-1.5">
                   <Info className="w-3.5 h-3.5" />
@@ -423,7 +433,6 @@ export default function InteractiveMap({ onSelectState }) {
                 </p>
               </div>
 
-              {/* Specific Rulers & Stats if available */}
               {selectedState.rulers && (
                 <div className="p-3 bg-obsidian-950 rounded-xl border border-slate-800">
                   <h4 className="font-semibold text-gold-400 mb-1">Негізгі Билеушілері:</h4>
@@ -437,7 +446,6 @@ export default function InteractiveMap({ onSelectState }) {
                 </div>
               )}
 
-              {/* Kangju Stats special display */}
               {selectedState.stats && (
                 <div className="p-3 bg-gold-500/10 rounded-xl border border-gold-500/20 text-gold-300">
                   <h4 className="font-semibold mb-1">Халық және Әскер Саны («Ханьшу»):</h4>
@@ -448,7 +456,6 @@ export default function InteractiveMap({ onSelectState }) {
                 </div>
               )}
 
-              {/* Conclusion */}
               <div className="p-3 bg-obsidian-950 rounded-xl border border-gold-500/20">
                 <h4 className="font-semibold text-gold-400 mb-1">Тарихи маңызы:</h4>
                 <p className="text-slate-300 italic">
@@ -457,7 +464,6 @@ export default function InteractiveMap({ onSelectState }) {
               </div>
             </div>
 
-            {/* Bottom Button to view full state section */}
             <button
               onClick={() => onSelectState(selectedState.id)}
               className="mt-4 w-full py-2.5 px-4 bg-gradient-to-r from-gold-500 to-amber-600 text-obsidian-950 font-bold rounded-xl text-xs flex items-center justify-center gap-2 hover:opacity-95 transition-opacity shadow-lg"

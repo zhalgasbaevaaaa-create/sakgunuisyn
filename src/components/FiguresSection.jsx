@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { HISTORICAL_FIGURES } from '../data/historyData';
-import { Users, User, Shield, BookOpen, Search, X, Sparkles, Award } from 'lucide-react';
+import { Users, User, Shield, BookOpen, Search, X, Sparkles, Award, Maximize2, Minimize2 } from 'lucide-react';
 
-export default function FiguresSection() {
+export default function FiguresSection({ onToggleFullscreen, isFullscreen }) {
   const [selectedFigure, setSelectedFigure] = useState(null);
   const [selectedStateFilter, setSelectedStateFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -26,14 +26,28 @@ export default function FiguresSection() {
   });
 
   return (
-    <section id="figures" className="py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10">
+    <section id="figures" className={`py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10 ${isFullscreen ? 'fullscreen-mode' : ''}`}>
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Users className="w-3.5 h-3.5" />
-            <span>Тарихи Портреттер Галереясы</span>
+        <div className="text-center max-w-3xl mx-auto mb-10 relative">
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <div className="mx-auto inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider">
+              <Users className="w-3.5 h-3.5" />
+              <span>Тарихи Портреттер Галереясы</span>
+            </div>
+
+            {onToggleFullscreen && (
+              <button
+                onClick={onToggleFullscreen}
+                className="px-3 py-1.5 rounded-xl bg-obsidian-900 border border-gold-500/30 text-gold-400 hover:text-gold-300 text-xs font-semibold flex items-center gap-1.5 shadow-lg transition-all"
+                title="Толық экран режимі"
+              >
+                {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                <span className="hidden sm:inline">{isFullscreen ? 'Шығу' : 'Толық экран'}</span>
+              </button>
+            )}
           </div>
+
           <h2 className="font-lora text-3xl sm:text-4xl font-bold text-slate-100 mb-3">
             Ерте темір дәуірінің көрнекті тұлғалары
           </h2>
@@ -44,7 +58,6 @@ export default function FiguresSection() {
 
         {/* Filter & Search Bar */}
         <div className="bg-obsidian-900 border border-gold-500/20 rounded-2xl p-4 mb-8 backdrop-blur-md shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
-          {/* State Filter Pills */}
           <div className="flex flex-wrap items-center gap-1.5">
             <span className="text-xs text-slate-400 font-medium mr-1">Мемлекет:</span>
             {stateOptions.map((opt) => (
@@ -62,7 +75,6 @@ export default function FiguresSection() {
             ))}
           </div>
 
-          {/* Search Box */}
           <div className="relative w-full sm:w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
@@ -84,7 +96,6 @@ export default function FiguresSection() {
               className="bg-obsidian-900 border border-gold-500/20 hover:border-gold-500/50 rounded-2xl overflow-hidden transition-all duration-300 shadow-xl hover:-translate-y-1 cursor-pointer group flex flex-col justify-between"
             >
               <div>
-                {/* Image Container */}
                 <div className="relative h-64 overflow-hidden bg-obsidian-950">
                   <img
                     src={fig.image}
@@ -93,19 +104,16 @@ export default function FiguresSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-transparent to-transparent opacity-90" />
                   
-                  {/* Reconstruction Badge */}
                   <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-obsidian-950/80 backdrop-blur-md border border-gold-500/30 text-[10px] text-gold-300 flex items-center gap-1 font-sans">
                     <Sparkles className="w-3 h-3 text-gold-400" />
                     <span>{fig.reconstructionNote}</span>
                   </div>
 
-                  {/* State Badge */}
                   <div className="absolute bottom-3 left-3 px-2.5 py-1 rounded-md bg-gold-500/20 backdrop-blur-md border border-gold-500/40 text-xs font-bold text-gold-300 font-lora">
                     {fig.stateName}
                   </div>
                 </div>
 
-                {/* Card Body */}
                 <div className="p-5 space-y-2">
                   <h3 className="font-lora text-xl font-bold text-slate-100 group-hover:text-gold-400 transition-colors">
                     {fig.name}
@@ -122,7 +130,6 @@ export default function FiguresSection() {
                 </div>
               </div>
 
-              {/* Card Footer */}
               <div className="p-4 pt-0">
                 <button
                   onClick={(e) => {
@@ -143,7 +150,6 @@ export default function FiguresSection() {
         {selectedFigure && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-obsidian-950/80 backdrop-blur-md animate-fadeIn">
             <div className="bg-obsidian-900 border border-gold-500/40 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 relative shadow-2xl space-y-6">
-              {/* Close Button */}
               <button
                 onClick={() => setSelectedFigure(null)}
                 className="absolute top-4 right-4 p-2 rounded-full bg-obsidian-950 text-slate-400 hover:text-gold-400 border border-slate-800"
@@ -151,7 +157,6 @@ export default function FiguresSection() {
                 <X className="w-5 h-5" />
               </button>
 
-              {/* Modal Header */}
               <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start border-b border-slate-800 pb-6">
                 <div className="relative w-36 h-48 rounded-2xl overflow-hidden border-2 border-gold-500/30 flex-shrink-0 shadow-xl">
                   <img
@@ -179,7 +184,6 @@ export default function FiguresSection() {
                 </div>
               </div>
 
-              {/* Body Text */}
               <div className="space-y-4 text-xs sm:text-sm text-slate-200 leading-relaxed font-sans">
                 <div className="p-4 bg-obsidian-950 rounded-xl border border-slate-800 space-y-1">
                   <h4 className="font-bold text-gold-400 text-xs uppercase tracking-wider">Тарихи рөлі мен қызметі:</h4>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { STATES_DATA } from '../data/historyData';
-import { BookOpen, Shield, MapPin, Swords, Scroll, ChevronDown, ChevronUp, Sparkles, CheckCircle2 } from 'lucide-react';
+import { BookOpen, Shield, MapPin, Swords, Scroll, ChevronDown, ChevronUp, Sparkles, Maximize2, Minimize2 } from 'lucide-react';
 
-export default function StatesSection({ activeStateId }) {
+export default function StatesSection({ activeStateId, onToggleFullscreen, isFullscreen }) {
   const [expandedStateId, setExpandedStateId] = useState(activeStateId || 'saka');
   const [activeTabMap, setActiveTabMap] = useState({});
 
@@ -13,14 +13,28 @@ export default function StatesSection({ activeStateId }) {
   const getTab = (stateId) => activeTabMap[stateId] || 'overview';
 
   return (
-    <section id="states" className="py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10">
+    <section id="states" className={`py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10 ${isFullscreen ? 'fullscreen-mode' : ''}`}>
       <div className="max-w-7xl mx-auto">
-        {/* Section Title */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Shield className="w-3.5 h-3.5" />
-            <span>Негізгі Саяси Бірлестіктер</span>
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-12 relative">
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <div className="mx-auto inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider">
+              <Shield className="w-3.5 h-3.5" />
+              <span>Негізгі Саяси Бірлестіктер</span>
+            </div>
+
+            {onToggleFullscreen && (
+              <button
+                onClick={onToggleFullscreen}
+                className="px-3 py-1.5 rounded-xl bg-obsidian-900 border border-gold-500/30 text-gold-400 hover:text-gold-300 text-xs font-semibold flex items-center gap-1.5 shadow-lg transition-all"
+                title="Толық экран режимі"
+              >
+                {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                <span className="hidden sm:inline">{isFullscreen ? 'Шығу' : 'Толық экран'}</span>
+              </button>
+            )}
           </div>
+
           <h2 className="font-lora text-3xl sm:text-4xl font-bold text-slate-100 mb-3">
             Ерте темір дәуірінің 6 ірі мемлекеті мен одақтары
           </h2>
@@ -47,7 +61,6 @@ export default function StatesSection({ activeStateId }) {
               >
                 {/* Header Banner */}
                 <div className="relative p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-b border-slate-800/80">
-                  {/* Background Image Layer with vignette */}
                   <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
                     <img
                       src={state.image}
@@ -78,7 +91,6 @@ export default function StatesSection({ activeStateId }) {
                     </p>
                   </div>
 
-                  {/* Toggle Button */}
                   <div className="relative z-10 flex items-center gap-3 self-end md:self-center">
                     <button
                       onClick={() => setExpandedStateId(isExpanded ? null : state.id)}
@@ -97,7 +109,6 @@ export default function StatesSection({ activeStateId }) {
                 {/* Expanded Detailed Content */}
                 {isExpanded && (
                   <div className="p-6 sm:p-8 bg-obsidian-950/90 space-y-6 animate-fadeIn">
-                    {/* Inner Tabs Navigation */}
                     <div className="flex flex-wrap items-center gap-2 border-b border-slate-800 pb-3 text-xs">
                       <button
                         onClick={() => setTab(state.id, 'overview')}
@@ -151,7 +162,6 @@ export default function StatesSection({ activeStateId }) {
                       </button>
                     </div>
 
-                    {/* Tab 1: Overview & Territory */}
                     {currentTab === 'overview' && (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-4">
@@ -199,7 +209,6 @@ export default function StatesSection({ activeStateId }) {
                       </div>
                     )}
 
-                    {/* Tab 2: Capital Details */}
                     {currentTab === 'capital' && (
                       <div className="p-5 bg-obsidian-900 rounded-xl border border-gold-500/20 space-y-3">
                         <h4 className="font-lora text-lg font-bold text-gold-400 flex items-center gap-2">
@@ -217,7 +226,6 @@ export default function StatesSection({ activeStateId }) {
                       </div>
                     )}
 
-                    {/* Tab 3: Rulers & Tribes */}
                     {currentTab === 'rulers' && (
                       <div className="space-y-4">
                         {state.tribes && (
@@ -274,7 +282,6 @@ export default function StatesSection({ activeStateId }) {
                       </div>
                     )}
 
-                    {/* Tab 4: Wars */}
                     {currentTab === 'wars' && (
                       <div className="space-y-4">
                         <h4 className="font-lora text-lg font-bold text-gold-400 flex items-center gap-2">
@@ -297,7 +304,6 @@ export default function StatesSection({ activeStateId }) {
                       </div>
                     )}
 
-                    {/* Tab 5: Legends */}
                     {currentTab === 'legend' && (
                       <div className="p-5 bg-obsidian-900 rounded-xl border border-gold-500/20 space-y-3">
                         <h4 className="font-lora text-lg font-bold text-gold-400 flex items-center gap-2">

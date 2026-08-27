@@ -1,26 +1,22 @@
 import React, { useState } from 'react';
 import { QUIZ_QUESTIONS, MATCHING_TASKS, TRUE_FALSE_TASKS } from '../data/historyData';
-import { CheckCircle, HelpCircle, Award, CheckCircle2, XCircle, RotateCcw, Sparkles, ArrowRight } from 'lucide-react';
+import { CheckCircle, HelpCircle, Award, CheckCircle2, XCircle, RotateCcw, Sparkles, ArrowRight, Maximize2, Minimize2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-export default function QuizSection({ userAnswers, setUserAnswers, onQuizComplete }) {
-  const [activeQuizTab, setActiveQuizTab] = useState('quiz'); // 'quiz', 'matching', 'tf'
+export default function QuizSection({ userAnswers, setUserAnswers, onQuizComplete, onToggleFullscreen, isFullscreen }) {
+  const [activeQuizTab, setActiveQuizTab] = useState('quiz');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Matching state
   const [matchingState, setMatchingState] = useState({});
   const [matchingResults, setMatchingStateResults] = useState(null);
 
-  // True/False state
   const [tfAnswers, setTfAnswers] = useState({});
   const [tfSubmitted, setTfSubmitted] = useState(false);
 
-  // Current Question
   const currentQ = QUIZ_QUESTIONS[currentQuestionIndex];
 
-  // Handle Option Click for Multiple Choice Quiz
   const handleOptionSelect = (optionIdx) => {
     if (isSubmitted) return;
     setSelectedOption(optionIdx);
@@ -41,7 +37,6 @@ export default function QuizSection({ userAnswers, setUserAnswers, onQuizComplet
     };
     setUserAnswers(newAnswers);
 
-    // Calculate score
     const scoreCount = Object.values(newAnswers).filter(a => a.isCorrect).length;
     onQuizComplete(scoreCount, QUIZ_QUESTIONS.length);
 
@@ -72,15 +67,6 @@ export default function QuizSection({ userAnswers, setUserAnswers, onQuizComplet
     }
   };
 
-  // Reset Multiple Choice Quiz
-  const handleResetQuiz = () => {
-    setUserAnswers({});
-    setCurrentQuestionIndex(0);
-    setSelectedOption(null);
-    setIsSubmitted(false);
-  };
-
-  // Handle Matching Submit
   const handleMatchingSelect = (taskId, stateName, target) => {
     setMatchingState(prev => ({
       ...prev,
@@ -104,7 +90,6 @@ export default function QuizSection({ userAnswers, setUserAnswers, onQuizComplet
     });
   };
 
-  // Handle True/False Submit
   const handleTfSelect = (id, val) => {
     if (tfSubmitted) return;
     setTfAnswers(prev => ({ ...prev, [id]: val }));
@@ -115,14 +100,28 @@ export default function QuizSection({ userAnswers, setUserAnswers, onQuizComplet
   };
 
   return (
-    <section id="quiz" className="py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10">
+    <section id="quiz" className={`py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10 ${isFullscreen ? 'fullscreen-mode' : ''}`}>
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            <CheckCircle className="w-3.5 h-3.5" />
-            <span>Интерактивті Тапсырмалар Жүйесі</span>
+        <div className="text-center max-w-2xl mx-auto mb-10 relative">
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <div className="mx-auto inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider">
+              <CheckCircle className="w-3.5 h-3.5" />
+              <span>Интерактивті Тапсырмалар Жүйесі</span>
+            </div>
+
+            {onToggleFullscreen && (
+              <button
+                onClick={onToggleFullscreen}
+                className="px-3 py-1.5 rounded-xl bg-obsidian-900 border border-gold-500/30 text-gold-400 hover:text-gold-300 text-xs font-semibold flex items-center gap-1.5 shadow-lg transition-all"
+                title="Толық экран режимі"
+              >
+                {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                <span className="hidden sm:inline">{isFullscreen ? 'Шығу' : 'Толық экран'}</span>
+              </button>
+            )}
           </div>
+
           <h2 className="font-lora text-3xl sm:text-4xl font-bold text-slate-100 mb-3">
             Білімді тексеру және Бекіту
           </h2>
@@ -168,7 +167,6 @@ export default function QuizSection({ userAnswers, setUserAnswers, onQuizComplet
         {/* Tab 1: Multiple Choice Quiz */}
         {activeQuizTab === 'quiz' && (
           <div className="bg-obsidian-900 border border-gold-500/20 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
-            {/* Progress Header */}
             <div className="flex items-center justify-between border-b border-slate-800 pb-4 text-xs">
               <span className="px-3 py-1 bg-gold-500/10 text-gold-400 border border-gold-500/30 rounded-full font-bold">
                 Сұрақ {currentQuestionIndex + 1} / {QUIZ_QUESTIONS.length}
@@ -176,12 +174,10 @@ export default function QuizSection({ userAnswers, setUserAnswers, onQuizComplet
               <span className="text-slate-400">Бөлім: <strong className="text-slate-200">{currentQ.category}</strong></span>
             </div>
 
-            {/* Question Text */}
             <h3 className="font-lora text-lg sm:text-xl font-bold text-slate-100 leading-snug">
               {currentQ.question}
             </h3>
 
-            {/* Options List */}
             <div className="space-y-3">
               {currentQ.options.map((optText, idx) => {
                 let btnStyle = "bg-obsidian-950 border-slate-800 text-slate-200 hover:border-gold-500/40";
@@ -217,7 +213,6 @@ export default function QuizSection({ userAnswers, setUserAnswers, onQuizComplet
               })}
             </div>
 
-            {/* Explanation Box on Submitted */}
             {isSubmitted && (
               <div className={`p-4 rounded-2xl border text-xs sm:text-sm leading-relaxed space-y-1 animate-fadeIn ${
                 selectedOption === currentQ.correct
@@ -239,7 +234,6 @@ export default function QuizSection({ userAnswers, setUserAnswers, onQuizComplet
               </div>
             )}
 
-            {/* Action Buttons */}
             <div className="flex items-center justify-between pt-4 border-t border-slate-800">
               <button
                 onClick={handlePrevQuestion}

@@ -1,19 +1,33 @@
 import React, { useState } from 'react';
 import { MYTHS_AND_LEGENDS } from '../data/historyData';
-import { Scroll, Sparkles, BookOpen, AlertCircle } from 'lucide-react';
+import { Scroll, Sparkles, BookOpen, AlertCircle, Maximize2, Minimize2 } from 'lucide-react';
 
-export default function LegendsSection() {
+export default function LegendsSection({ onToggleFullscreen, isFullscreen }) {
   const [selectedMyth, setSelectedMyth] = useState(null);
 
   return (
-    <section id="legends" className="py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10">
+    <section id="legends" className={`py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10 ${isFullscreen ? 'fullscreen-mode' : ''}`}>
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Scroll className="w-3.5 h-3.5" />
-            <span>Аңыздар мен Тарихи Шындық</span>
+        <div className="text-center max-w-3xl mx-auto mb-12 relative">
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <div className="mx-auto inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider">
+              <Scroll className="w-3.5 h-3.5" />
+              <span>Аңыздар мен Тарихи Шындық</span>
+            </div>
+
+            {onToggleFullscreen && (
+              <button
+                onClick={onToggleFullscreen}
+                className="px-3 py-1.5 rounded-xl bg-obsidian-900 border border-gold-500/30 text-gold-400 hover:text-gold-300 text-xs font-semibold flex items-center gap-1.5 shadow-lg transition-all"
+                title="Толық экран режимі"
+              >
+                {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                <span className="hidden sm:inline">{isFullscreen ? 'Шығу' : 'Толық экран'}</span>
+              </button>
+            )}
           </div>
+
           <h2 className="font-lora text-3xl sm:text-4xl font-bold text-slate-100 mb-3">
             Ерте көшпелілердің киелі аңыздары мен мифологиясы
           </h2>
@@ -49,7 +63,6 @@ export default function LegendsSection() {
                 </p>
               </div>
 
-              {/* Scientific Note Box */}
               <div className="p-3 bg-obsidian-950 rounded-xl border border-slate-800 text-[11px] text-slate-400 space-y-1 font-sans">
                 <span className="text-amber-400 font-semibold flex items-center gap-1">
                   <AlertCircle className="w-3 h-3" /> Тарихи-ғылыми түсіндірме:

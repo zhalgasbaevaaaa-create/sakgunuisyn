@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { STATES_DATA } from '../data/historyData';
 import { ZoomIn, ZoomOut, RotateCcw, Info, MapPin, Sparkles, Navigation, Layers, ExternalLink, Maximize2, Minimize2 } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFullscreen }) {
   const [selectedStateId, setSelectedStateId] = useState('saka');
-  const [eraFilter, setEraFilter] = useState('all'); // 'all', 'early', 'late'
+  const [eraFilter, setEraFilter] = useState('all');
   const [zoomLevel, setZoomLevel] = useState(1);
   const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
   const [hoveredRegion, setHoveredRegion] = useState(null);
@@ -12,7 +13,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
 
   const selectedState = STATES_DATA.find((s) => s.id === selectedStateId) || STATES_DATA[0];
 
-  // Zoom / Pan handlers
   const handleZoomIn = () => setZoomLevel((prev) => Math.min(prev + 0.25, 2.5));
   const handleZoomOut = () => setZoomLevel((prev) => Math.max(prev - 0.25, 0.8));
   const handleResetZoom = () => {
@@ -20,7 +20,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
     setPanOffset({ x: 0, y: 0 });
   };
 
-  // Regions definition in SVG coordinates (width 1000, height 550)
   const mapRegions = [
     {
       id: 'scythians',
@@ -90,14 +89,12 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
     }
   ];
 
-  // Trade Routes Paths
   const silkRoadPath = "M 920,290 L 780,310 L 630,350 L 485,370 L 360,330 L 190,290";
   const syrDaryaPath = "M 550,260 L 520,310 L 480,360 L 440,390";
 
   return (
     <section id="map" className={`py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/10 ${isFullscreen ? 'fullscreen-mode' : ''}`}>
       <div className="max-w-7xl mx-auto relative">
-        {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 relative">
           <div className="flex items-center justify-between gap-4 mb-3">
             <div className="mx-auto inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider">
@@ -125,7 +122,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
           </p>
         </div>
 
-        {/* Map Control Bar */}
         <div className="bg-obsidian-900 border border-gold-500/20 rounded-2xl p-4 mb-6 backdrop-blur-md shadow-xl flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className="text-xs text-slate-400 font-medium flex items-center gap-1">
@@ -219,12 +215,11 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
           </div>
         </div>
 
-        {/* Map & Detail Panel Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           <div className="lg:col-span-8 bg-obsidian-900 border border-gold-500/20 rounded-2xl overflow-hidden relative shadow-2xl min-h-[460px]">
             <div className="absolute inset-0 z-0 opacity-15 pointer-events-none">
               <img
-                src="./images/map_background.jpg"
+                src={getAssetUrl('images/map_background.jpg')}
                 alt="Map parchment"
                 className="w-full h-full object-cover"
               />
@@ -384,7 +379,7 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
 
             <div className="relative h-44 rounded-xl overflow-hidden mb-4 border border-gold-500/20 group">
               <img
-                src={selectedState.image}
+                src={getAssetUrl(selectedState.image)}
                 alt={selectedState.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />

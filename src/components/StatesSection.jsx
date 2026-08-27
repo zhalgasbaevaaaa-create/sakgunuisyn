@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { STATES_DATA } from '../data/historyData';
 import { BookOpen, Shield, MapPin, Swords, Scroll, ChevronDown, ChevronUp, Sparkles, Maximize2, Minimize2 } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export default function StatesSection({ activeStateId, onToggleFullscreen, isFullscreen }) {
   const [expandedStateId, setExpandedStateId] = useState(activeStateId || 'saka');
@@ -63,7 +64,7 @@ export default function StatesSection({ activeStateId, onToggleFullscreen, isFul
                 <div className="relative p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-b border-slate-800/80">
                   <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
                     <img
-                      src={state.image}
+                      src={getAssetUrl(state.image)}
                       alt={state.name}
                       className="w-full h-full object-cover object-center"
                     />

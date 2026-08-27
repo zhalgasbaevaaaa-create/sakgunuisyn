@@ -37,10 +37,10 @@ export default function Navbar({ activeSection, setActiveSection, openSearch, pr
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       scrolled 
-        ? 'bg-obsidian-950/95 backdrop-blur-md border-b border-gold-500/20 shadow-xl' 
+        ? 'bg-obsidian-950/95 backdrop-blur-md border-b border-gold-500/30 shadow-2xl' 
         : 'bg-gradient-to-b from-obsidian-950/95 to-transparent'
     }`}>
-      {/* Reading Progress Line */}
+      {/* Top Reading Progress Bar */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-obsidian-800 z-50">
         <div 
           className="h-full bg-gradient-to-r from-gold-600 via-gold-400 to-amber-300 transition-all duration-300" 
@@ -48,12 +48,10 @@ export default function Navbar({ activeSection, setActiveSection, openSearch, pr
         />
       </div>
 
-      {/* Supervisor Top Banner */}
-      <div className="bg-gradient-to-r from-obsidian-950 via-gold-500/20 to-obsidian-950 border-b border-gold-500/20 py-1 px-4 text-center">
-        <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold text-gold-300 font-lora">
-          <UserCheck className="w-3.5 h-3.5 text-gold-400" />
-          <span>Интерактивті сайт жетекшісі — Сарсенбаев А.Б.</span>
-        </div>
+      {/* Prominent Site Supervisor Top Banner */}
+      <div className="bg-gold-500 text-obsidian-950 font-extrabold text-xs sm:text-sm py-1.5 px-4 text-center tracking-wide shadow-md flex items-center justify-center gap-2 font-lora">
+        <UserCheck className="w-4 h-4 text-obsidian-950" />
+        <span>Сайт жетекшісі - Сарсенбаев А.Б.</span>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between">

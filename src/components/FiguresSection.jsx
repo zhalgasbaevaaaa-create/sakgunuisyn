@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { HISTORICAL_FIGURES } from '../data/historyData';
 import { Users, User, Shield, BookOpen, Search, X, Sparkles, Award, Maximize2, Minimize2 } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export default function FiguresSection({ onToggleFullscreen, isFullscreen }) {
   const [selectedFigure, setSelectedFigure] = useState(null);
@@ -98,7 +99,7 @@ export default function FiguresSection({ onToggleFullscreen, isFullscreen }) {
               <div>
                 <div className="relative h-64 overflow-hidden bg-obsidian-950">
                   <img
-                    src={fig.image}
+                    src={getAssetUrl(fig.image)}
                     alt={fig.name}
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 filter contrast-105"
                   />
@@ -160,7 +161,7 @@ export default function FiguresSection({ onToggleFullscreen, isFullscreen }) {
               <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start border-b border-slate-800 pb-6">
                 <div className="relative w-36 h-48 rounded-2xl overflow-hidden border-2 border-gold-500/30 flex-shrink-0 shadow-xl">
                   <img
-                    src={selectedFigure.image}
+                    src={getAssetUrl(selectedFigure.image)}
                     alt={selectedFigure.name}
                     className="w-full h-full object-cover object-top"
                   />

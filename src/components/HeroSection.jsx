@@ -1,13 +1,14 @@
 import React from 'react';
 import { CHRONOLOGY_SUMMARY } from '../data/historyData';
-import { Compass, Map, Shield, ChevronDown, CheckCircle2, Award, Sparkles } from 'lucide-react';
+import { Compass, Map, Shield, ChevronDown, CheckCircle2, Award, Sparkles, UserCheck } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export default function HeroSection({ onExploreMap, onExploreStates }) {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-obsidian-950">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-obsidian-950">
       <div className="absolute inset-0 z-0">
         <img 
-          src="./images/hero_background.jpg" 
+          src={getAssetUrl('images/hero_background.jpg')}
           alt="Ерте темір дәуірі" 
           className="w-full h-full object-cover object-center opacity-30 mix-blend-luminosity scale-105 transition-transform duration-1000"
         />
@@ -20,11 +21,17 @@ export default function HeroSection({ onExploreMap, onExploreStates }) {
       <div className="absolute bottom-10 right-10 w-64 h-64 bg-amber-600/10 rounded-full filter blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-5xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-semibold tracking-wider uppercase mb-6 shadow-lg backdrop-blur-md">
-          <Sparkles className="w-4 h-4 text-gold-400 animate-pulse" />
-          <span>Академиялық Цифрлық Музей & Атлас</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
-          <span className="text-slate-300 font-normal">100% Түпнұсқа Тарихи Деректер</span>
+        {/* Top Tag Badges */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-semibold tracking-wider uppercase shadow-lg backdrop-blur-md">
+            <Sparkles className="w-4 h-4 text-gold-400 animate-pulse" />
+            <span>Академиялық Цифрлық Музей & Атлас</span>
+          </div>
+
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/20 border border-gold-500 text-gold-300 font-bold text-xs sm:text-sm font-lora shadow-lg backdrop-blur-md">
+            <UserCheck className="w-4 h-4 text-gold-400" />
+            <span>Сайт жетекшісі - Сарсенбаев А.Б.</span>
+          </div>
         </div>
 
         <h1 className="font-lora text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-100 mb-6 leading-tight">

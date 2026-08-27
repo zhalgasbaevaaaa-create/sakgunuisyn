@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { MYTHS_AND_LEGENDS } from '../data/historyData';
 import { Scroll, Sparkles, AlertCircle, Maximize2, Minimize2, ChevronDown, ChevronUp, ZoomIn, ZoomOut } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export default function LegendsSection({ onToggleFullscreen, isFullscreen }) {
   const [selectedStateFilter, setSelectedStateFilter] = useState('all');
   const [expandedCellId, setExpandedStateId] = useState(null);
-  const [fontScaleMap, setFontScaleMap] = useState({}); // per-cell font size modifier
+  const [fontScaleMap, setFontScaleMap] = useState({});
 
   const stateOptions = [
     { id: 'all', label: 'Барлық аңыздар' },
@@ -116,9 +117,8 @@ export default function LegendsSection({ onToggleFullscreen, isFullscreen }) {
                     </h3>
                   </div>
 
-                  {/* Cell Controls: Font Scale & Expand Button */}
+                  {/* Cell Controls */}
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    {/* Font Scale Buttons */}
                     <div className="flex items-center bg-obsidian-950 border border-slate-800 rounded-lg p-1 text-xs text-slate-300">
                       <button
                         onClick={(e) => changeFontSize(item.id, 0.15, e)}
@@ -157,11 +157,10 @@ export default function LegendsSection({ onToggleFullscreen, isFullscreen }) {
                   className="p-6 space-y-4 font-sans transition-all"
                   style={{ fontSize: `${fontScale}rem`, lineHeight: `${fontScale * 1.7}` }}
                 >
-                  {/* Visual Image if expanded or featured */}
                   {isExpanded && item.image && (
                     <div className="relative h-64 rounded-xl overflow-hidden border border-gold-500/20 mb-4 animate-fadeIn">
                       <img
-                        src={item.image}
+                        src={getAssetUrl(item.image)}
                         alt={item.title}
                         className="w-full h-full object-cover"
                       />
@@ -169,7 +168,6 @@ export default function LegendsSection({ onToggleFullscreen, isFullscreen }) {
                     </div>
                   )}
 
-                  {/* Main Myth Content */}
                   <div className="p-4 bg-obsidian-950 rounded-xl border border-slate-800 text-slate-200">
                     <h4 className="font-lora font-bold text-gold-400 mb-1" style={{ fontSize: `${fontScale * 1.1}rem` }}>
                       Аңыздың мазмұны:
@@ -179,7 +177,6 @@ export default function LegendsSection({ onToggleFullscreen, isFullscreen }) {
                     </p>
                   </div>
 
-                  {/* Scientific Explanation */}
                   <div className="p-4 bg-amber-500/10 rounded-xl border border-amber-500/20 text-amber-300 space-y-1">
                     <h4 className="font-bold flex items-center gap-1.5" style={{ fontSize: `${fontScale * 1.05}rem` }}>
                       <AlertCircle className="w-4 h-4" /> Тарихи-ғылыми түсіндірме:

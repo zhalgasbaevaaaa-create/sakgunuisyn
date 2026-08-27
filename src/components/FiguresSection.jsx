@@ -21,7 +21,7 @@ export default function FiguresSection({ onToggleFullscreen, isFullscreen }) {
     const matchesSearch =
       fig.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       fig.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      fig.pdfContent.toLowerCase().includes(searchQuery.toLowerCase());
+      fig.sourceContent.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesState && matchesSearch;
   });
 
@@ -52,7 +52,7 @@ export default function FiguresSection({ onToggleFullscreen, isFullscreen }) {
             Ерте темір дәуірінің көрнекті тұлғалары
           </h2>
           <p className="text-slate-300 text-sm sm:text-base font-sans">
-            PDF жазбаларында кездесетін Томирис, Мөде, Скунха, Елжау, Атей, Чжан Цянь сияқты саяси және әскери қайраткерлердің тарихи профильдері.
+            Тарихи жазбаларда кездесетін Томирис, Мөде, Скунха, Елжау, Атей, Чжан Цянь сияқты саяси және әскери қайраткерлердің тарихи профильдері.
           </p>
         </div>
 
@@ -191,8 +191,8 @@ export default function FiguresSection({ onToggleFullscreen, isFullscreen }) {
                 </div>
 
                 <div className="p-4 bg-obsidian-950 rounded-xl border border-gold-500/20 space-y-1">
-                  <h4 className="font-bold text-gold-400 text-xs uppercase tracking-wider">PDF түпнұсқа дерегі:</h4>
-                  <p className="text-slate-300 font-lora text-sm">{selectedFigure.pdfContent}</p>
+                  <h4 className="font-bold text-gold-400 text-xs uppercase tracking-wider">Түпнұсқа тарихи дерегі:</h4>
+                  <p className="text-slate-300 font-lora text-sm">{selectedFigure.sourceContent}</p>
                 </div>
 
                 <div className="p-3 bg-obsidian-950 rounded-xl border border-slate-800 text-xs text-slate-400 flex items-center justify-between">

@@ -126,7 +126,7 @@ export default function QuizSection({ userAnswers, setUserAnswers, onQuizComplet
             Білімді тексеру және Бекіту
           </h2>
           <p className="text-slate-300 text-sm font-sans">
-            PDF материалы бойынша жасалған тесттер, сәйкестендіру тапсырмалары және Дұрыс/Бұрыс сұрақтары.
+            Түпнұсқа тарихи деректер бойынша жасалған тесттер, сәйкестендіру тапсырмалары және Дұрыс/Бұрыс сұрақтары.
           </p>
         </div>
 

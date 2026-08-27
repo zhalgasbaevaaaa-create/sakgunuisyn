@@ -5,7 +5,6 @@ import { Compass, Map, Shield, ChevronDown, CheckCircle2, Award, Sparkles } from
 export default function HeroSection({ onExploreMap, onExploreStates }) {
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-obsidian-950">
-      {/* Background Image with Dark Vignette and Gold Sparkles */}
       <div className="absolute inset-0 z-0">
         <img 
           src="./images/hero_background.jpg" 
@@ -17,20 +16,17 @@ export default function HeroSection({ onExploreMap, onExploreStates }) {
         <div className="absolute inset-0 ornament-bg opacity-30" />
       </div>
 
-      {/* Decorative Golden Ornaments */}
       <div className="absolute top-20 left-10 w-48 h-48 bg-gold-500/10 rounded-full filter blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-64 h-64 bg-amber-600/10 rounded-full filter blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-5xl mx-auto text-center">
-        {/* Top Historical Tag */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-semibold tracking-wider uppercase mb-6 shadow-lg backdrop-blur-md">
           <Sparkles className="w-4 h-4 text-gold-400 animate-pulse" />
           <span>Академиялық Цифрлық Музей & Атлас</span>
           <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
-          <span className="text-slate-300 font-normal">100% PDF Деректері</span>
+          <span className="text-slate-300 font-normal">100% Түпнұсқа Тарихи Деректер</span>
         </div>
 
-        {/* Main Title */}
         <h1 className="font-lora text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-100 mb-6 leading-tight">
           <span className="block text-slate-200">{CHRONOLOGY_SUMMARY.title}</span>
           <span className="gold-gradient-text block text-2xl sm:text-4xl lg:text-5xl mt-2 font-normal italic">
@@ -38,7 +34,6 @@ export default function HeroSection({ onExploreMap, onExploreStates }) {
           </span>
         </h1>
 
-        {/* Subtitle / Traditional Period */}
         <div className="max-w-3xl mx-auto space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed font-sans mb-8">
           <p className="bg-obsidian-900/60 p-4 rounded-xl border border-gold-500/10 backdrop-blur-sm text-slate-200">
             {CHRONOLOGY_SUMMARY.traditionalPeriod}
@@ -48,7 +43,6 @@ export default function HeroSection({ onExploreMap, onExploreStates }) {
           </p>
         </div>
 
-        {/* Call-to-action Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-4 mb-14">
           <button
             onClick={onExploreMap}
@@ -67,7 +61,6 @@ export default function HeroSection({ onExploreMap, onExploreStates }) {
           </button>
         </div>
 
-        {/* Key Statistics Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
           <div className="p-4 rounded-2xl bg-obsidian-900/70 border border-gold-500/20 backdrop-blur-md hover:border-gold-500/40 transition-all text-left group">
             <div className="text-gold-400 text-2xl sm:text-3xl font-bold font-lora mb-1 group-hover:scale-105 transition-transform">
@@ -80,7 +73,7 @@ export default function HeroSection({ onExploreMap, onExploreStates }) {
 
           <div className="p-4 rounded-2xl bg-obsidian-900/70 border border-gold-500/20 backdrop-blur-md hover:border-gold-500/40 transition-all text-left group">
             <div className="text-gold-400 text-2xl sm:text-3xl font-bold font-lora mb-1 group-hover:scale-105 transition-transform">
-              11+ Соғыстар
+              20+ Соғыстар
             </div>
             <div className="text-slate-400 text-xs font-sans">
               Кир, Дарий, Филипп II, Байдэн шайқастары мен Хань оқиғалары
@@ -89,7 +82,7 @@ export default function HeroSection({ onExploreMap, onExploreStates }) {
 
           <div className="p-4 rounded-2xl bg-obsidian-900/70 border border-gold-500/20 backdrop-blur-md hover:border-gold-500/40 transition-all text-left group">
             <div className="text-gold-400 text-2xl sm:text-3xl font-bold font-lora mb-1 group-hover:scale-105 transition-transform">
-              10+ Тұлғалар
+              11+ Тұлғалар
             </div>
             <div className="text-slate-400 text-xs font-sans">
               Томирис, Мөде, Скунха, Елжау, Атей, Чжан Цянь т.б.
@@ -98,7 +91,7 @@ export default function HeroSection({ onExploreMap, onExploreStates }) {
 
           <div className="p-4 rounded-2xl bg-obsidian-900/70 border border-gold-500/20 backdrop-blur-md hover:border-gold-500/40 transition-all text-left group">
             <div className="text-gold-400 text-xl sm:text-2xl font-bold font-lora mb-1 group-hover:scale-105 transition-transform">
-              б.з.б. VIII ғ. – б.з. VI ғ.
+              б.з.б. VIII ғ. – б.з. V ғ.
             </div>
             <div className="text-slate-400 text-xs font-sans">
               Хронологиялық толық қамту
@@ -106,7 +99,6 @@ export default function HeroSection({ onExploreMap, onExploreStates }) {
           </div>
         </div>
 
-        {/* Scroll Indicator */}
         <div className="mt-12 flex justify-center">
           <button 
             onClick={onExploreMap}

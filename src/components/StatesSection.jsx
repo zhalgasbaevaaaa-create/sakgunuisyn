@@ -39,7 +39,7 @@ export default function StatesSection({ activeStateId, onToggleFullscreen, isFul
             Ерте темір дәуірінің 6 ірі мемлекеті мен одақтары
           </h2>
           <p className="text-slate-300 text-sm sm:text-base font-sans">
-            PDF-те берілген 100% түпнұсқа тарихи ақпарат. Әр мемлекеттің территориясы, астаналық орталықтары, билеушілері, соғыстары мен аңыздарын толық оқыңыз.
+            Түпнұсқа тарихи ақпарат. Әр мемлекеттің территориясы, астаналық орталықтары, билеушілері, соғыстары мен аңыздарын толық оқыңыз.
           </p>
         </div>
 
@@ -213,7 +213,7 @@ export default function StatesSection({ activeStateId, onToggleFullscreen, isFul
                       <div className="p-5 bg-obsidian-900 rounded-xl border border-gold-500/20 space-y-3">
                         <h4 className="font-lora text-lg font-bold text-gold-400 flex items-center gap-2">
                           <BookOpen className="w-5 h-5 text-gold-400" />
-                          Астанасы мен саяси орталығы жөніндегі PDF мазмұны
+                          Астанасы мен саяси орталығы жөніндегі деректер
                         </h4>
                         <div className="p-4 bg-obsidian-950 rounded-lg border border-slate-800 text-sm text-slate-200 leading-relaxed font-sans">
                           {state.capitalNote}

@@ -10,9 +10,6 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
         if (isOpen) onClose();
-        else {
-          // Open search modal (handled by parent or custom trigger)
-        }
       }
       if (e.key === 'Escape' && isOpen) {
         onClose();
@@ -24,7 +21,6 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
 
   if (!isOpen) return null;
 
-  // Perform search across all entities
   const q = query.trim().toLowerCase();
 
   const matchedStates = q ? STATES_DATA.filter(s =>
@@ -38,7 +34,7 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
     f.name.toLowerCase().includes(q) ||
     f.title.toLowerCase().includes(q) ||
     f.role.toLowerCase().includes(q) ||
-    f.pdfContent.toLowerCase().includes(q)
+    f.sourceContent.toLowerCase().includes(q)
   ) : [];
 
   const matchedEvents = q ? TIMELINE_EVENTS.filter(e =>
@@ -57,7 +53,6 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-obsidian-950/80 backdrop-blur-md animate-fadeIn">
       <div className="bg-obsidian-900 border border-gold-500/40 rounded-3xl max-w-2xl w-full p-6 shadow-2xl space-y-4 relative max-h-[80vh] flex flex-col">
-        {/* Header Search Input */}
         <div className="flex items-center gap-3 border-b border-slate-800 pb-4">
           <Search className="w-5 h-5 text-gold-400 flex-shrink-0" />
           <input
@@ -76,7 +71,6 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
           </button>
         </div>
 
-        {/* Results Container */}
         <div className="overflow-y-auto flex-1 space-y-4 pr-1 text-xs">
           {!q && (
             <div className="text-center py-10 text-slate-400 font-sans space-y-2">
@@ -99,7 +93,6 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
             </div>
           )}
 
-          {/* Matched States */}
           {matchedStates.length > 0 && (
             <div className="space-y-2">
               <h4 className="font-bold text-gold-400 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
@@ -124,7 +117,6 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
             </div>
           )}
 
-          {/* Matched Figures */}
           {matchedFigures.length > 0 && (
             <div className="space-y-2">
               <h4 className="font-bold text-gold-400 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
@@ -149,7 +141,6 @@ export default function SearchModal({ isOpen, onClose, onNavigate }) {
             </div>
           )}
 
-          {/* Matched Events */}
           {matchedEvents.length > 0 && (
             <div className="space-y-2">
               <h4 className="font-bold text-gold-400 uppercase tracking-wider text-[11px] flex items-center gap-1.5">

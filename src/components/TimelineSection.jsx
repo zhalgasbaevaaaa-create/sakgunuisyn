@@ -21,7 +21,7 @@ export default function TimelineSection({ onToggleFullscreen, isFullscreen }) {
           <div className="flex items-center justify-between gap-4 mb-3">
             <div className="mx-auto inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-xs font-semibold uppercase tracking-wider">
               <Clock className="w-3.5 h-3.5" />
-              <span>Интерактивті Хронология</span>
+              <span>Интерактивті Хронологиялық Сызба</span>
             </div>
 
             {onToggleFullscreen && (
@@ -37,10 +37,10 @@ export default function TimelineSection({ onToggleFullscreen, isFullscreen }) {
           </div>
 
           <h2 className="font-lora text-3xl sm:text-4xl font-bold text-slate-100 mb-3">
-            Ең маңызды соғыстар мен тарихи оқиғалар
+            Ең маңызды соғыстар мен тарихи оқиғалар хроникасы
           </h2>
           <p className="text-slate-300 text-sm sm:text-base font-sans">
-            PDF кестесіндегі барлық 11 негізгі даталар мен оқиғалардың хроникасы. Оқиғаны басып, толық мәліметпен танысыңыз.
+            Дереккөз кестесіндегі барлық негізгі даталар мен оқиғалардың хронологиялық тізбегі. Оқиғаны басып, толық мәліметпен танысыңыз.
           </p>
         </div>
 
@@ -134,7 +134,7 @@ export default function TimelineSection({ onToggleFullscreen, isFullscreen }) {
               </h3>
 
               <div className="p-4 bg-obsidian-950 rounded-xl border border-gold-500/20 space-y-2">
-                <h4 className="font-bold text-gold-400 text-xs uppercase tracking-wider">Шайқас/Оқиға нәтижесі (PDF):</h4>
+                <h4 className="font-bold text-gold-400 text-xs uppercase tracking-wider">Шайқас/Оқиға нәтижесі:</h4>
                 <p className="text-sm text-slate-200 leading-relaxed font-lora">{selectedEvent.result}</p>
               </div>
 

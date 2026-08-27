@@ -105,7 +105,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
               <span>Интерактивті Тарихи Атлас</span>
             </div>
 
-            {/* Fullscreen Button */}
             {onToggleFullscreen && (
               <button
                 onClick={onToggleFullscreen}
@@ -122,13 +121,12 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
             Ерте темір дәуірінің саяси картасы
           </h2>
           <p className="text-slate-300 text-sm sm:text-base font-sans">
-            Картадан сақтар, скифтер, сарматтар, ғұндар, үйсіндер және қаңлылардың тарихи мекендеген аумақтарын зерттеңіз. Аумақты басып, PDF-тегі толық деректерді қараңыз.
+            Картадан сақтар, скифтер, сарматтар, ғұндар, үйсіндер және қаңлылардың тарихи мекендеген аумақтарын зерттеңіз. Аумақты басып, толық деректерді қараңыз.
           </p>
         </div>
 
         {/* Map Control Bar */}
         <div className="bg-obsidian-900 border border-gold-500/20 rounded-2xl p-4 mb-6 backdrop-blur-md shadow-xl flex flex-wrap items-center justify-between gap-4">
-          {/* Era Filter Selector */}
           <div className="flex items-center gap-2">
             <span className="text-xs text-slate-400 font-medium flex items-center gap-1">
               <Layers className="w-3.5 h-3.5 text-gold-400" />
@@ -168,7 +166,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
             </div>
           </div>
 
-          {/* Quick State Selectors */}
           <div className="flex flex-wrap items-center gap-1.5">
             {mapRegions.map((region) => (
               <button
@@ -189,7 +186,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
             ))}
           </div>
 
-          {/* Map Controls */}
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowRoutes(!showRoutes)}
@@ -225,7 +221,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
 
         {/* Map & Detail Panel Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Interactive SVG Canvas Container with Antique Background */}
           <div className="lg:col-span-8 bg-obsidian-900 border border-gold-500/20 rounded-2xl overflow-hidden relative shadow-2xl min-h-[460px]">
             <div className="absolute inset-0 z-0 opacity-15 pointer-events-none">
               <img
@@ -235,7 +230,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
               />
             </div>
 
-            {/* Hover Badge */}
             {hoveredRegion && (
               <div className="absolute top-4 left-4 z-20 bg-obsidian-950/90 border border-gold-400/40 p-3 rounded-xl backdrop-blur-md animate-fadeIn shadow-xl max-w-xs">
                 <div className="flex items-center gap-2 mb-1">
@@ -254,7 +248,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
               </div>
             )}
 
-            {/* SVG Canvas */}
             <div className="relative z-10 w-full h-full p-4 overflow-hidden flex items-center justify-center bg-transparent">
               <svg
                 viewBox="0 0 1000 550"
@@ -278,12 +271,10 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
 
                 <rect width="1000" height="550" fill="url(#grid)" />
 
-                {/* Seas / Rivers outlines for historical realism */}
                 <path d="M 120,290 C 140,280 180,310 160,330 C 130,340 100,310 120,290 Z" fill="#14213d" opacity="0.7" stroke="#1d3557" />
                 <path d="M 330,330 C 350,300 370,350 360,420 C 330,420 310,380 330,330 Z" fill="#14213d" opacity="0.7" stroke="#1d3557" />
                 <path d="M 430,330 C 450,320 460,350 440,360 Z" fill="#14213d" opacity="0.7" stroke="#1d3557" />
 
-                {/* Trade Routes overlay */}
                 {showRoutes && (
                   <g opacity="0.6">
                     <path
@@ -308,7 +299,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
                   </g>
                 )}
 
-                {/* Region Polygons */}
                 {mapRegions.map((region) => {
                   const isSelected = selectedStateId === region.id;
                   const isVisible = eraFilter === 'all' || region.era === eraFilter;
@@ -331,7 +321,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
                         filter={isSelected ? 'url(#glow)' : undefined}
                       />
 
-                      {/* Region Label */}
                       <text
                         x={region.center.x}
                         y={region.center.y}
@@ -345,7 +334,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
                         {region.name}
                       </text>
 
-                      {/* Capital Marker Pin */}
                       <g
                         transform={`translate(${region.capitalPos.x}, ${region.capitalPos.y})`}
                         className="cursor-pointer group"
@@ -360,7 +348,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
               </svg>
             </div>
 
-            {/* Bottom Map Legend */}
             <div className="relative z-10 bg-obsidian-950/80 px-4 py-3 border-t border-slate-800 text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2">
               <span className="flex items-center gap-1 text-slate-300">
                 <MapPin className="w-3.5 h-3.5 text-gold-400" />
@@ -379,7 +366,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
             </div>
           </div>
 
-          {/* Right Selected State Details Panel */}
           <div className="lg:col-span-4 bg-obsidian-900 border border-gold-500/20 rounded-2xl p-6 backdrop-blur-md shadow-2xl relative">
             <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
               <div className="flex items-center gap-2">
@@ -396,7 +382,6 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
               </span>
             </div>
 
-            {/* State Visual Image */}
             <div className="relative h-44 rounded-xl overflow-hidden mb-4 border border-gold-500/20 group">
               <img
                 src={selectedState.image}
@@ -409,12 +394,11 @@ export default function InteractiveMap({ onSelectState, onToggleFullscreen, isFu
               </div>
             </div>
 
-            {/* Content Tabbed Info */}
             <div className="space-y-4 max-h-[380px] overflow-y-auto pr-1 text-xs">
               <div className="p-3 bg-obsidian-950 rounded-xl border border-slate-800">
                 <h4 className="font-semibold text-gold-400 mb-1 flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5" />
-                  Территориясы (PDF дерегі):
+                  Территориясы (Түпнұсқа дереккөз):
                 </h4>
                 <ul className="list-disc list-inside text-slate-300 space-y-0.5">
                   {selectedState.territory.map((t, idx) => (

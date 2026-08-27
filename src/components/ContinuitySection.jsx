@@ -66,7 +66,7 @@ export default function ContinuitySection({ onToggleFullscreen, isFullscreen }) 
 
           <div className="mt-8 p-6 bg-gradient-to-r from-obsidian-900 via-obsidian-950 to-obsidian-900 rounded-2xl border border-gold-500/30 text-center max-w-4xl mx-auto shadow-2xl">
             <h4 className="font-lora text-lg font-bold text-gold-400 mb-2">
-              Ең маңызды ғылыми қорытынды (PDF):
+              Ең маңызды ғылыми қорытынды:
             </h4>
             <p className="text-sm sm:text-base text-slate-200 font-lora italic leading-relaxed">
               «Сақ-сармат әлемі → ғұндық дәуірдің күшеюі → Үйсін және Қаңлы мемлекеттері → Орталық Азиядағы кейінгі түркі дәуіріне өтетін саяси-мәдени негіз.»
@@ -78,7 +78,7 @@ export default function ContinuitySection({ onToggleFullscreen, isFullscreen }) 
         <div>
           <div className="text-center mb-8">
             <h3 className="font-lora text-2xl font-bold text-slate-100">
-              Негізгі пайдаланылған дереккөздер (PDF)
+              Негізгі пайдаланылған тарихи дереккөздер
             </h3>
             <p className="text-xs sm:text-sm text-slate-400 mt-1 font-sans">
               Ерте темір дәуірінің мемлекеттері туралы дерек қалдырған көне авторлар мен патша жазбалары

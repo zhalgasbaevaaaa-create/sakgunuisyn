@@ -20,7 +20,7 @@ export default function InteractiveMap({ onSelectState }) {
     setPanOffset({ x: 0, y: 0 });
   };
 
-  // Regions definition in custom SVG coordinates (width 1000, height 550)
+  // Regions definition in SVG coordinates (width 1000, height 550)
   // Maps Central Eurasia: W. Kazakhstan, Zhetysu, Syr Darya, Mongolia, Black Sea
   const mapRegions = [
     {
@@ -29,7 +29,6 @@ export default function InteractiveMap({ onSelectState }) {
       period: 'б.з.б. VIII–III ғғ.',
       color: '#3b82f6', // Blue
       era: 'early',
-      // North Black Sea, Danube, Don, Azov
       path: 'M 100,240 C 120,200 180,190 260,210 C 290,230 300,270 270,300 C 220,330 150,320 100,280 Z',
       center: { x: 190, y: 250 },
       capital: 'Scythian Neapolis (Қырым)',
@@ -39,9 +38,8 @@ export default function InteractiveMap({ onSelectState }) {
       id: 'sarmatians',
       name: 'Сарматтар',
       period: 'б.з.б. III ғ. – б.з. IV ғ.',
-      color: '#e11d48', // Red/Crimson
+      color: '#e11d48', // Red
       era: 'late',
-      // West Kazakhstan, Ural, Emba, Caspian -> Don
       path: 'M 250,220 C 300,180 420,180 480,220 C 500,280 460,340 370,360 C 300,360 250,300 250,220 Z',
       center: { x: 360, y: 260 },
       capital: 'Орталық астанасы анықталмаған',
@@ -53,7 +51,6 @@ export default function InteractiveMap({ onSelectState }) {
       period: 'б.з.б. VIII–III ғғ.',
       color: '#d4af37', // Gold
       era: 'early',
-      // Zhetysu, S. Kazakhstan, Aral, Central/East KZ
       path: 'M 460,240 C 530,200 680,210 740,260 C 730,340 620,390 480,360 C 440,320 440,270 460,240 Z',
       center: { x: 570, y: 290 },
       capital: 'Біртұтас астанасы болмаған',
@@ -65,7 +62,6 @@ export default function InteractiveMap({ onSelectState }) {
       period: 'б.з.б. III ғ. соңы – б.з. алғашқы ғғ.',
       color: '#10b981', // Emerald Green
       era: 'late',
-      // Mongolia, Altai, N. China
       path: 'M 680,180 C 760,150 900,160 950,220 C 940,310 820,350 710,310 C 660,260 660,200 680,180 Z',
       center: { x: 800, y: 230 },
       capital: 'Longcheng (Лунчэн)',
@@ -77,7 +73,6 @@ export default function InteractiveMap({ onSelectState }) {
       period: 'б.з.б. II ғ. – б.з. V ғ.',
       color: '#8b5cf6', // Purple
       era: 'late',
-      // Zhetysu, Ili valley, Issyk-Kul, Tian-Shan
       path: 'M 560,300 C 620,280 690,300 700,350 C 690,400 620,410 560,380 C 540,350 540,320 560,300 Z',
       center: { x: 620, y: 340 },
       capital: 'Чигу (Қызыл аңғар)',
@@ -89,7 +84,6 @@ export default function InteractiveMap({ onSelectState }) {
       period: 'б.з.б. II ғ. – б.з. IV ғ.',
       color: '#f59e0b', // Amber/Orange
       era: 'late',
-      // Middle Syr Darya, S. Kazakhstan, Tashkent, Arys
       path: 'M 440,310 C 500,290 560,320 550,380 C 520,430 450,420 420,380 C 410,340 420,320 440,310 Z',
       center: { x: 480, y: 350 },
       capital: 'Юэни (қысқы) & Бэйтянь (жазғы)',
@@ -217,9 +211,18 @@ export default function InteractiveMap({ onSelectState }) {
 
         {/* Map & Detail Panel Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Interactive SVG Canvas Container */}
+          {/* Interactive SVG Canvas Container with Antique Background */}
           <div className="lg:col-span-8 bg-obsidian-900 border border-gold-500/20 rounded-2xl overflow-hidden relative shadow-2xl min-h-[460px]">
-            {/* Legend & Hover Badge */}
+            {/* Background Parchment Texture */}
+            <div className="absolute inset-0 z-0 opacity-15 pointer-events-none">
+              <img
+                src="./images/map_background.jpg"
+                alt="Map parchment"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Hover Badge */}
             {hoveredRegion && (
               <div className="absolute top-4 left-4 z-20 bg-obsidian-950/90 border border-gold-400/40 p-3 rounded-xl backdrop-blur-md animate-fadeIn shadow-xl max-w-xs">
                 <div className="flex items-center gap-2 mb-1">
@@ -239,7 +242,7 @@ export default function InteractiveMap({ onSelectState }) {
             )}
 
             {/* SVG Canvas */}
-            <div className="w-full h-full p-4 overflow-hidden flex items-center justify-center bg-[#07090e]">
+            <div className="relative z-10 w-full h-full p-4 overflow-hidden flex items-center justify-center bg-transparent">
               <svg
                 viewBox="0 0 1000 550"
                 className="w-full h-auto max-h-[500px] transition-transform duration-300 cursor-grab active:cursor-grabbing"
@@ -250,9 +253,8 @@ export default function InteractiveMap({ onSelectState }) {
                 {/* Background Grid & Water Bodies */}
                 <defs>
                   <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(212, 175, 55, 0.04)" strokeWidth="1"/>
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(212, 175, 55, 0.05)" strokeWidth="1"/>
                   </pattern>
-                  {/* Subtle Caspian & Black sea shapes */}
                   <filter id="glow">
                     <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
                     <feMerge>
@@ -265,12 +267,9 @@ export default function InteractiveMap({ onSelectState }) {
                 <rect width="1000" height="550" fill="url(#grid)" />
 
                 {/* Seas / Rivers outlines for historical realism */}
-                {/* Black Sea */}
-                <path d="M 120,290 C 140,280 180,310 160,330 C 130,340 100,310 120,290 Z" fill="#14213d" opacity="0.6" stroke="#1d3557" />
-                {/* Caspian Sea */}
-                <path d="M 330,330 C 350,300 370,350 360,420 C 330,420 310,380 330,330 Z" fill="#14213d" opacity="0.6" stroke="#1d3557" />
-                {/* Aral Sea */}
-                <path d="M 430,330 C 450,320 460,350 440,360 Z" fill="#14213d" opacity="0.6" stroke="#1d3557" />
+                <path d="M 120,290 C 140,280 180,310 160,330 C 130,340 100,310 120,290 Z" fill="#14213d" opacity="0.7" stroke="#1d3557" />
+                <path d="M 330,330 C 350,300 370,350 360,420 C 330,420 310,380 330,330 Z" fill="#14213d" opacity="0.7" stroke="#1d3557" />
+                <path d="M 430,330 C 450,320 460,350 440,360 Z" fill="#14213d" opacity="0.7" stroke="#1d3557" />
 
                 {/* Trade Routes overlay */}
                 {showRoutes && (
@@ -309,11 +308,11 @@ export default function InteractiveMap({ onSelectState }) {
                       <path
                         d={region.path}
                         fill={region.color}
-                        fillOpacity={isSelected ? 0.35 : 0.18}
+                        fillOpacity={isSelected ? 0.45 : 0.25}
                         stroke={region.color}
                         strokeWidth={isSelected ? 3.5 : 2}
                         strokeDasharray={isSelected ? 'none' : '4 2'}
-                        className="cursor-pointer transition-all hover:fill-opacity-40"
+                        className="cursor-pointer transition-all hover:fill-opacity-50"
                         onMouseEnter={() => setHoveredRegion(region)}
                         onMouseLeave={() => setHoveredRegion(null)}
                         onClick={() => setSelectedStateId(region.id)}
@@ -326,7 +325,7 @@ export default function InteractiveMap({ onSelectState }) {
                         y={region.center.y}
                         textAnchor="middle"
                         fill={isSelected ? '#ffffff' : '#e2e8f0'}
-                        fontSize={isSelected ? '15' : '13'}
+                        fontSize={isSelected ? '16' : '13'}
                         fontWeight={isSelected ? 'bold' : 'normal'}
                         fontFamily="Lora, Georgia, serif"
                         className="pointer-events-none select-none drop-shadow-md"
@@ -341,7 +340,7 @@ export default function InteractiveMap({ onSelectState }) {
                         onClick={() => setSelectedStateId(region.id)}
                       >
                         <circle r="4" fill="#d4af37" stroke="#0b0d12" strokeWidth="1.5" />
-                        <circle r="8" fill="#d4af37" opacity="0.2" className="animate-ping" />
+                        <circle r="8" fill="#d4af37" opacity="0.3" className="animate-ping" />
                       </g>
                     </g>
                   );
@@ -350,7 +349,7 @@ export default function InteractiveMap({ onSelectState }) {
             </div>
 
             {/* Bottom Map Legend */}
-            <div className="bg-obsidian-950/80 px-4 py-3 border-t border-slate-800 text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2">
+            <div className="relative z-10 bg-obsidian-950/80 px-4 py-3 border-t border-slate-800 text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2">
               <span className="flex items-center gap-1 text-slate-300">
                 <MapPin className="w-3.5 h-3.5 text-gold-400" />
                 Картадағы белгішені немесе аумақты басып, толық мазмұнын оқыңыз

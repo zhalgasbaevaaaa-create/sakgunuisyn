@@ -8,7 +8,7 @@ export default function HeroSection({ onExploreMap, onExploreStates }) {
       {/* Background Image with Dark Vignette and Gold Sparkles */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="/images/hero_background.jpg" 
+          src="./images/hero_background.jpg" 
           alt="Ерте темір дәуірі" 
           className="w-full h-full object-cover object-center opacity-30 mix-blend-luminosity scale-105 transition-transform duration-1000"
         />
